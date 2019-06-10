@@ -1,0 +1,97 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+<form action="{% url 'armydbapp:submit_soldier' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div>
+    <div class="h1 mb-5" style="position: relative; left: 80%;">إضافة جندي</div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">الاسم</span></div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="soldier-name">
+    </div>
+    <div class="input-group mb-3" dir="rtl" >
+        <div class="input-group-prepend" style="padding-left: 10px;">
+          <span class="input-group-text" id="inputGroupFileAddon01" style="text-align:right;" >الصورة:   </span>
+        </div>
+        
+        <div class="custom-file">
+          <input type="file"  name="soldier-img">
+        </div>
+      </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">الرقم العسكري</span></div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="soldier-id">
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">العنوان</span></div>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="soldier-adress">
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">التخصص</label>
+      </div>
+      <select class="custom-select" id="inputGroupSelect01" name="soldier-speciality">
+          <option value="مراقب جوي">مراقب جوي</option>
+          <option value="صف">صف</option>
+          <option value="اشارة دجو">اشارة دجو</option>
+          <option value="خدمات طبية">خدمات طبية</option>
+          <option value="سائق">سائق</option>
+          <option value="طاهي">طاهي</option>
+          <option value="مركبات">مركبات</option>
+          <option value="مهني مركبات">مهني مركبات</option>
+          <option value="تعينات">تعينات</option>
+          <option value="اشارة قوات مسلحة">اشارة قوات مسلحة</option>
+          <option value="اسلحة و ذخيرة">اسلحة و ذخيرة</option>
+          <option value="مهمات">مهمات</option>
+          
+      </select>
+  </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">قيادة/ رقم النقطة</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" name="soldier-army-unit-number">
+            <option value="قيادة">قيادة</option>
+            <option class="arabic" value="1">1</option>
+            <option class="arabic" value="2">2</option>
+            <option class="arabic" value="3">3</option>
+            <option class="arabic" value="4">4</option>
+            <option class="arabic" value="5">5</option>
+            <option class="arabic" value="6">6</option>
+            <option class="arabic" value="7">7</option>
+            <option class="arabic" value="8">8</option>
+            <option class="arabic" value="9">9</option>
+            <option class="arabic" value="10">10</option>
+            <option class="arabic" value="11">11</option>
+            <option class="arabic" value="12">12</option>
+        </select>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">التمركز</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" name="soldier-army-unit-name">
+          <option value="الكتيبة">الكتيبة</option>
+          <option value="أحمد">أحمد</option>
+          <option value="بديع">بديع</option>
+          <option value="تاجر">تاجر</option>
+          <option value="هشام">هشام</option>
+          <option value="نحاس">نحاس</option>
+          <option value="السرية الأولي">السرية الأولي</option>
+          <option value="السرية الثانية">السرية الثانية</option>
+          <option value="السرية الثالثة">السرية الثالثة</option>
+        </select>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">تاريخ التجنيد</span></div>
+        <input type="date" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="soldier-service-start-date">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">تاريخ التسريح</span></div>
+        <input type="date" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="soldier-service-end-date">
+    </div>
+    <button class="btn btn-success" type="submit" style="width:100%;">موافـــق</button>
+</div>
+</form>
+{% endblock content %}

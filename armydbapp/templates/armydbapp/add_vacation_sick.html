@@ -1,0 +1,15 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+<form action="{% url 'armydbapp:submit_vacation_sick' %}" method="post">
+{% csrf_token %}
+<div>
+    <div dir="rtl" class="h1 mb-5" style="position: relative; left: 80%;">إجازة مرضية</div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">تاريخ العودة</span></div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="soldier_number" value={{soldier_id}} hidden>
+        <input type="date" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="date_of_return" required>
+    </div>
+    <button class="btn btn-success" type="submit" style="width:100%;">تــــم</button>
+</div>
+</form>
+{% endblock content %}

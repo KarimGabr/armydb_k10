@@ -1,0 +1,378 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+{% load static %}
+{% load i18n %}
+
+{% if error %}
+    <h3 style="color: red">{{ error }}</h3>
+{% endif %}
+<style>
+
+  
+h1{
+  font-size: 35px;
+}
+table {
+  width:70%;
+}
+table, th, td {
+  
+  margin: auto;
+  padding:1%;
+  direction: rtl;
+  border-style: ridge;
+  border: 5px solid lightblue;
+  text-align: center;
+}
+
+
+@keyframes wiwa {
+    0% { background-color: red; }
+    100% { background-color: white; }
+}
+  
+</style>
+
+
+
+<div class="row justify-content-center mt-5 mb-5"><h1>التـــــمـام اليــــــــــــومي للكتيـــــــــــــبــــة</h1></div>
+<div class="row justify-content-center m-5" >
+<table>
+  <thead>
+    <tr>
+    <th>البيان</th>
+    <th>القوة</th>
+    <th>الموجود</th>
+    <th>غياب</th>
+    <th>خارج</th>
+    <th>اجازة</th>
+    <th>اجازة مرضية</th>
+    <th>مأمورية</th>
+    <th>حبس</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>الاجمالي</th>
+      <td class="arabic" >
+      {{number_of_soldiers}}
+      </td>
+      <td class="arabic">
+      {{number_here}}
+      </td>
+      <td class="arabic">
+      {{number_absent}}
+      </td>
+      <td class="arabic">
+      {{number_out}}
+      </td>
+
+      <td class="arabic">
+      {{number_of_at_vacation}}
+      </td>
+
+      <td class="arabic">
+      {{number_of_at_vacation_sick}}
+      </td>
+
+      <td class="arabic">
+      {{number_mission}}
+      </td>
+      <td class="arabic">
+
+      {{number_prisioned}}
+
+      </td>
+    </tr>
+
+    <tr>
+        <th>قيادة الكتيبة</th>
+        <td  class="arabic" >
+        {{number_of_soldiers_k10_head}}
+        </td>
+        <td class="arabic">
+        {{number_here_k10_head}}
+        </td>
+        <td class="arabic">
+        {{number_absent_k10_head}}
+        </td>
+        <td class="arabic">
+        {{number_out_k10_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_of_at_vacation_k10_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_of_at_vacation_sick_k10_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_mission_k10_head}}
+        </td>
+        <td class="arabic">
+
+        {{number_prisioned_k10_head}}
+
+        </td>
+    </tr>
+
+    <tr>
+        <th> السرية الاولي</th>
+        <td  class="arabic">
+        {{number_of_soldiers_s1_head}}
+        </td>
+        <td class="arabic">
+        {{number_here_s1_head}}
+        </td>
+        <td class="arabic">
+        {{number_absent_s1_head}}
+        </td>
+        <td class="arabic">
+        {{number_out_s1_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_of_at_vacation_s1_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_of_at_vacation_sick_s1_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_mission_s1_head}}
+        </td>
+        <td class="arabic">
+
+        {{number_prisioned_s1_head}}
+
+        </td>
+    </tr>
+
+    <tr>
+        <th>السرية الثانية</th>
+        <td  class="arabic">
+        {{number_of_soldiers_s2_head}}
+        </td>
+        <td class="arabic">
+        {{number_here_s2_head}}
+        </td>
+        <td class="arabic">
+        {{number_absent_s2_head}}
+        </td>
+        <td class="arabic">
+        {{number_out_s2_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_of_at_vacation_s2_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_of_at_vacation_sick_s2_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_mission_s2_head}}
+        </td>
+        <td class="arabic">
+
+        {{number_prisioned_s2_head}}
+
+        </td>
+    </tr>
+
+    <tr>
+        <th>السرية الثالثة</th>
+        <td class="arabic" >
+        {{number_of_soldiers_s3_head}}
+        </td>
+        <td class="arabic">
+        {{number_here_s3_head}}
+        </td>
+        <td class="arabic">
+        {{number_absent_s3_head}}
+        </td>
+        <td class="arabic">
+        {{number_out_s3_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_of_at_vacation_s3_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_of_at_vacation_sick_s3_head}}
+        </td>
+
+        <td class="arabic">
+        {{number_mission_s3_head}}
+        </td>
+        <td class="arabic">
+
+        {{number_prisioned_s3_head}}
+
+        </td>
+    </tr>
+  </tbody>
+</table>
+</div>          
+<div class="row justify-content-center mt-5 mb-5">
+<table>
+  <thead>
+    <tr>
+      <th >المطلوب عمل خطة غيار لهم</th>
+      <th>المتأخرين عن الاجازة</th>
+      <th>عودة اليوم</th>
+      <th >الموقع عليهم عقوبات</th>
+      <th >منتظرين مكتب</th>
+      <th>غياب</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td  id="lala1">
+        <a href="{% url 'armydbapp:late_unit_list' %}"  class="arabic">{{number_late_unit}}</a>
+        {% if number_late_unit > "0" %}
+        <script>
+          document.getElementById("lala1").style.animation = "wiwa";
+          document.getElementById("lala1").style.animationDuration = "3s";
+          document.getElementById("lala1").style.animationIterationCount = "infinite";
+        </script>
+        {% endif %}
+      </td>
+      
+        <td  id="lala2">
+            <a href="{% url 'armydbapp:late_vacation_list' %}"  class="arabic">{{number_late_vacation}}</a>
+            {% if number_late_vacation > "0" %}
+            <script>
+              document.getElementById("lala2").style.animation = "wiwa";
+              document.getElementById("lala2").style.animationDuration = "3s";
+              document.getElementById("lala2").style.animationIterationCount = "infinite";
+            </script>
+            {% endif %}
+        </td>
+        
+        <td  id="lala3">
+          <a href="{% url 'armydbapp:return_today_list' %}"  class="arabic">{{number_returning}}</a>
+              {% if number_returning > "0" %}
+              <script>
+                document.getElementById("lala3").style.animation = "wiwa";
+                document.getElementById("lala3").style.animationDuration = "3s";
+                document.getElementById("lala3").style.animationIterationCount = "infinite";
+              </script>
+              {% endif %}
+        </td>
+        
+        <td  id="lala4">
+            <a href="{% url 'armydbapp:punished_list' %}"  class="arabic"> {{number_punished}}</a>
+            {% if number_punished > "0" %}
+            <script>
+              document.getElementById("lala4").style.animation = "wiwa";
+              document.getElementById("lala4").style.animationDuration = "3s";
+              document.getElementById("lala4").style.animationIterationCount = "infinite";
+            </script>
+            {% endif %}
+        </td>
+        <td id="lala5">
+          <a href="{% url 'armydbapp:awaiting_trial_list' %}"  class="arabic"> {{awaiting_trial}}</a>
+            {% if awaiting_trial > "0" %}
+            <script>
+              document.getElementById("lala5").style.animation = "wiwa";
+              document.getElementById("lala5").style.animationDuration = "3s";
+              document.getElementById("lala5").style.animationIterationCount = "infinite";
+            </script>
+            {% endif %}
+        </td>
+        <td id="lala6">
+          <a href="{% url 'armydbapp:absent_list' %}"  class="arabic"> {{number_absent}}</a>
+            {% if awaiting_trial > "0" %}
+            <script>
+              document.getElementById("lala6").style.animation = "wiwa";
+              document.getElementById("lala6").style.animationDuration = "3s";
+              document.getElementById("lala6").style.animationIterationCount = "infinite";
+            </script>
+            {% endif %}
+        </td>
+
+    </tr>
+  </tbody>
+</table>
+</div>               
+<div class="row justify-content-center mt-5 mb-5">
+  <table  >
+    <thead>
+      <tr>
+        <th >البيان</th>
+        <th>راتب عالي</th>
+        <th>مجند</th>
+        <th >الاجمالي</th>
+      </tr>
+    </thead>
+    <tbody id="specialities" >
+      <script>
+      var sum_number_of_specialities = {{sum_number_of_specialities|safe}};
+      var number_of_specialities = {{number_of_specialities|safe}};
+      var specialities = {{specialities|safe}};
+      var tbody = document.getElementById("specialities");
+      for (i = 0; i < specialities.length; i++) { 
+        var row = tbody.insertRow(i);
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        var cell3 = row.insertCell(3);
+        cell0.outerHTML = "<th>" + specialities[i] + "</th>";
+        cell2.innerHTML = number_of_specialities[i];
+        cell2.classList.add("arabic");
+      }
+      var lenght_of_list = specialities.length; 
+      var row = row = tbody.insertRow(lenght_of_list);
+      var cell0 = row.insertCell(0);
+      var cell1 = row.insertCell(1);
+      var cell2 = row.insertCell(2);
+      var cell3 = row.insertCell(3);
+      cell0.outerHTML = "<th>" + "الاجمالي" + "</th>";
+      cell2.innerHTML = sum_number_of_specialities;
+      cell2.classList.add("arabic");
+      </script>
+    </tbody>
+  </table>
+  </div>                              
+<div class="table-responsive">
+  <table  >
+    <thead>
+      <tr id= "bayan_dof3at_radif">
+        <th >البيان</th>
+        <script>
+        var dof3at = {{dof3at|safe}};
+        var row = document.getElementById("bayan_dof3at_radif");
+        for (i = 1; i < dof3at.length+1 ; i++) { 
+        var cell0 = row.insertCell(i);
+        cell0.outerHTML = "<th class='arabic'>" + dof3at[i-1] + "</th>";
+      }
+        </script>
+      </tr>
+    </thead>
+    <tbody id="this_is_annoying">
+      <script>
+      var dof3at = {{dof3at|safe}};
+      var specialities = {{specialities|safe}};
+      var dof3a_number_of_specialities = {{dof3a_number_of_specialities|safe}};
+
+      var tbody = document.getElementById("this_is_annoying");
+      for (i = 0; i < specialities.length ; i++) { 
+        var row = tbody.insertRow(i);
+        var cell0 = row.insertCell(0);
+        cell0.outerHTML = "<th class='arabic'>" + specialities[i] + "</th>";
+        for (j = 1; j < dof3at.length+1 ; j++) {
+          var cell1 = row.insertCell(j);
+          cell1.outerHTML = "<td class='arabic'>" + dof3a_number_of_specialities[j-1][i] + "</td>";
+        }
+      }
+      </script>
+    </tbody>
+  </table>
+  </div>                              
+{% endblock content %}

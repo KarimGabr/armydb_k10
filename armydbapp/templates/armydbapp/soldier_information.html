@@ -1,0 +1,165 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="row">
+<div class="col"></div>
+<div class="col">
+<ul class="list-group" dir="rtl" style="text-align:start; font-weight:bold; min-width: 250px;">
+    {% if soldier.soldier_img %}
+    <li class="list-group-item">
+    <img src= "{{  soldier.soldier_img.url }}"/>
+    </li>
+    {% else %}
+    <li class="list-group-item">
+    <a  href="{% url 'armydbapp:add_img' %}?soldier_id={{soldier.soldier_id}}">إضافة صورة</a>
+    </li>
+    {% endif %}
+    {% if promotions %}
+    {% for i in promotions%}
+    <li class="list-group-item">الدرجة: {{i.soldier_rank}}</li>
+    <li class="list-group-item">تاريخ الترقي: {{i.promotion_date|date:"Y/n/j"}}</li>
+    {% endfor %}
+    {% else %}
+    <li class="list-group-item">الدرجة: جندي</li>
+    {% endif %}
+    <li class="list-group-item">الاسم: {{soldier.name}}</li>
+    <li class="list-group-item">الرقم العسكري: {{soldier.soldier_id}}</li>
+    <li class="list-group-item">التمركز: {{soldier.current_army_unit}}</li>
+    <li class="list-group-item">تاريخ التجنيد: {{soldier.service_start_date|date:"Y/n/j"}}</li>
+    <li class="list-group-item">تاريخ التسريح: {{soldier.service_end_date|date:"Y/n/j"}}</li>
+    <li class="list-group-item">تاريخ اخر عودة: {{soldier.return_date|date:"Y/n/j"}}</li>
+    {% if soldier.zucchini %}
+    <li class="list-group-item">التوصية: {{soldier.zucchini}}</li>
+    {% endif %}
+    {% if soldier.work_assigned %}
+    <li class="list-group-item">العمل المكلف به: {{soldier.work_assigned}}</li>
+    {% endif %}
+    {% if soldier.job %}
+    <li class="list-group-item">الحرفة: {{soldier.job}}</li>
+    {% endif %}
+</ul>
+</div>
+<div class="col"></div>
+</div>
+<div class="row">
+<div class="col"></div>
+<div class="table-responsive col">
+    
+<div class="table-hover">
+<table class="table table-bordered"  dir="rtl">
+
+    <thead >
+        <tr>
+          <th class="arabic border" style="text-align: center;"  scope="col" style="text-align: center;" >التمركز</th>
+          <th class="arabic border" style="text-align: center;"  scope="col" style="text-align: center;" >من تاريخ</th>
+          <th class="arabic border" style="text-align: center;"  scope="col" style="text-align: center;" >إلي تاريخ</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for x in units_list %}
+        <tr>
+            <td class="arabic border"  style="text-align: center;"  >{{x.army_unit}}</td>
+            <td class="arabic border"  style="text-align: center;"  >{{x.start_date|date:"Y/n/j"}}</td>
+            <td class="arabic border"  style="text-align: center;"  >{{x.end_date|date:"Y/n/j"}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+</div>
+</div>
+<div class="col"></div>
+</div>
+
+
+{% if punishement_list %}
+<div class="row">
+<div class="col"></div>
+<div class="table-responsive col">
+    
+<div class="table-hover">
+<table class="table table-bordered"  dir="rtl">
+
+    <thead >
+        <tr>
+          <th class="arabic border" style="text-align: center;"  scope="col" >العقوبة</th>
+          <th class="arabic border" style="text-align: center;"  scope="col" >من تاريخ</th>
+          <th class="arabic border" style="text-align: center;"  scope="col" >إلي تاريخ</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for x in punishement_list %}
+        <tr>
+            <td class="arabic border"  style="text-align: center;" >{{x.punishment}}</td>
+            <td class="arabic border"  style="text-align: center;" >{{x.start_date|date:"Y/n/j"}}</td>
+            <td class="arabic border"  style="text-align: center;" >{{x.end_date|date:"Y/n/j"}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+</div>
+</div>
+<div class="col"></div>
+</div>
+{% endif %}
+{% if vacations %}
+<div class="row">
+        <div class="col"></div>
+        <div class="table-responsive col">
+            
+        <div class="table-hover">
+        <table class="table table-bordered"  dir="rtl">
+            
+        <thead >
+            <tr><th colspan="2"  style="text-align: center;"  >الاجازات</th></tr>
+            <tr>
+              <th class = "border"  style="text-align: center;"  scope="col" >من تاريخ</th>
+              <th class = "border"  style="text-align: center;"  scope="col" >إلي تاريخ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in vacations %}
+            <tr>
+                <td class="arabic border"  style="text-align: center;"  >{{x.start_date|date:"Y/n/j"}}</td>
+                <td class="arabic border"  style="text-align: center;"  >{{x.end_date|date:"Y/n/j"}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="col"></div>
+</div>
+{% endif %}
+{% if rewards %}
+<div class="row">
+        <div class="col"></div>
+        <div class="table-responsive col">
+            
+        <div class="table-hover">
+        <table class="table table-bordered"  dir="rtl">
+        
+            <thead >
+                <tr>
+                    <th class="arabic border" style="text-align: center;"  scope="col" >عدد ايام المنحة</th>
+                    <th class="arabic border" style="text-align: center;"  scope="col" >تاريخ المنحة</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in rewards %}
+                <tr>
+                    <td class="arabic border"  style="text-align: center;" >{{x.reward_days}}</td>
+                    <td class="arabic border"  style="text-align: center;" >{{x.reward_date|date:"Y/n/j"}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        
+        </table>
+    </div>
+    </div>
+    <div class="col"></div>
+    </div>
+{% endif %}
+{% endblock content %}

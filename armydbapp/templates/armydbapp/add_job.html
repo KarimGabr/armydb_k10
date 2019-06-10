@@ -1,0 +1,15 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+<form action="{% url 'armydbapp:submit_job' %}" method="post">
+{% csrf_token %}
+<div>
+    <div class="h1 mb-5" style="position: relative; left: 80%;" dir="rtl">إضافة الحرفة</div> 
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">الحرفة </span></div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="soldier_number" value={{soldier_id}} hidden>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="job" required>
+    </div>
+    <button class="btn btn-success" type="submit" style="width:100%;">موافق</button>
+</div>
+</form>
+{% endblock content %}

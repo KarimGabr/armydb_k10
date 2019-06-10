@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title dir="rtl">قاعدة بيانات الجنود ك10 مر جو بالنظر</title>
+    {% load static %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'armydbapp/bootstrap-4.2.1-dist/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'armydbapp/bulma-0.6.2/css/bulma.css' %}"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'armydbapp/images/ionia-logo.png' %}"/>
+    {#<link rel="stylesheet" type="text/css" href="{% static 'armydbapp/main.css' %}"/>#}
+    <link rel="stylesheet" type="text/css" href="{% static 'armydbapp/catalog.css' %}"/>
+</head>
+<body>
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="{% url 'armydbapp:index' %}">
+                <img src="{% static 'armydbapp/images/ionia-logo.png' %}" alt="app_logo" width="30" height="40">
+            </a>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                {% if request.path == "/home" %}
+                <a href="{% url 'armydbapp:login' %}" class="button">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <section class="section">
+        <div class="container" dir="rtl">
+            {% block content %}{% endblock content %}
+        </div>
+    </section>
+</body>
+</html>

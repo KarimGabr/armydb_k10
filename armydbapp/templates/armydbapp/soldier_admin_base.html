@@ -1,0 +1,380 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title dir="rtl">قاعدة بيانات الجنود ك10 مر جو بالنظر</title>
+    {% load static %}
+    <script src="{% static 'armydbapp/jquery/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'armydbapp/jsPDF-1.3.2/dist/jspdf.min.js' %}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'armydbapp/bootstrap-4.2.1-dist/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'armydbapp/bulma-0.6.2/css/bulma.css' %}"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'armydbapp/images/ionia-logo.png' %}"/>
+    {#<link rel="stylesheet" type="text/css" href="{% static 'armydbapp/main.css' %}"/>#}
+    <link rel="stylesheet" type="text/css" href="{% static 'armydbapp/catalog.css' %}"/>
+    
+</head>
+
+<style>
+  * { box-sizing: border-box; }
+body {
+  font: 16px Arial; 
+}
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9; 
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+
+    .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.clockdate-wrapper {
+    max-width:350px;
+    width:100%;
+    text-align:center;
+    border-radius:5px;
+    border-color: rgb(255, 217, 0);
+    
+}
+#clock{
+    font-family: arial;
+    font-size:24px;
+    text-shadow:0px 0px 1px #fff;
+    color:black;
+}
+#clock span {
+    color:black;
+    text-shadow:0px 0px 1px #333;
+    font-size:18px;
+    
+#date {
+    letter-spacing:10px;
+    font-size:14px;
+    font-family:arial;
+    color:black;
+}
+</style>
+
+</style>
+<body onload="start()" dir="rtl">
+    <nav class="navbar" role="navigation" aria-label="main navigation" style="width:100%; position: fixed; z-index: 1;">
+        
+                
+                            <div class="navbar-item" style="right:3%;  ">
+                                        <div id="navMenu" class="navbar-menu">
+                                                    <div class="navbar" >
+                                                                <div class="navbar-item has-dropdown-left is-hoverable">
+                                                                            
+                                                                            <a class="navbar-link ">القائمة</a>
+                                                                                    <div class="navbar-dropdown  is-boxed" >
+                                                                                        <a class="navbar-item" href="{% url 'armydbapp:soldier_list' %}">قاعدة البيانات</a>
+                                                                                        <a class="navbar-item" href="{% url 'armydbapp:reward_list' %}">كشف المنح</a>
+                                                                                        <a class="navbar-item" href="{% url 'armydbapp:punished_list' %}">كشف العقوبات</a>
+                                                                                        <a class="navbar-item" href="{% url 'armydbapp:late_vacation_list' %}">كشف المتأخرين عن الاجازة</a>
+                                                                                        <a class="navbar-item" href="{% url 'armydbapp:logout' %}">الخروج</a>
+                                                                                    </div>
+                                                                 </div>
+                                                    </div>
+                                        </div>
+                            </div>
+            <div class="navbar-item" >
+                <div>
+                    <form autocomplete="off" action="{% url 'armydbapp:soldier_search' %}" method="post">
+                        {% csrf_token %}
+                        <div class="autocomplete" style="min-width: 200px;">
+                            <p class="control has-icons-left">
+                        <input id="myInput" type="text" name="q" placeholder="بحث بالاسم ...">
+                        
+                        </p>
+                        </div>
+                        <button class="btn btn-primary" type="submit" >بحث</button>
+                        </form>
+                </div>
+            </div>
+                            
+
+
+        <div class="navbar-item">
+                <div id="clockdate">
+                    <div class="clockdate-wrapper">
+                      <div id="clock"></div>
+                      <div id="date"></div>
+                </div>
+        </div>
+        </div>
+        <span></span>
+        <div class="navbar-brand" >
+                <a class="navbar-item" href="{% url 'armydbapp:index' %}">
+                    <img title="التمام" src="{% static 'armydbapp/images/katiba-logo.png' %}" alt="app_logo">
+                </a>
+               <div class="navbar-burger burger" data-target="navMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            
+    </nav>
+    <div id="load-screen" style="opacity: 0.98; background-color: gray; position:absolute; width:100%; height: 1000%; z-index: 2;">
+            <div class="loader" style="top:1%; right: 40%;" ></div>
+        </div>  
+        </body>
+    <section class="section" style="width: 100%;">
+        <div>
+            <div style="min-height: 150px"></div>
+            {% block content %}{% endblock content %}
+        </div>
+    </section>
+    <script src="{% static 'armydbapp/js/burger.js' %}"></script>
+    <section class="section" style="width: 100%; height:100% ;">
+        <div>            
+        </div>
+    </section>
+    <script>
+    
+
+            function start(){
+                arabian();
+                startTime();
+                var x = document.getElementById("load-screen");
+                x.style.display = "none";
+                document.getElementsByClassName("loader").style.display = "none";
+            }
+                function startTime() {
+                  var today = new Date();
+                  var hr = today.getHours();
+                  var min = today.getMinutes();
+                  var sec = today.getSeconds();
+                  ap = (hr < 12) ? "<span>ص</span>" : "<span>م</span>";
+                  hr = (hr == 0) ? 12 : hr;
+                  hr = (hr > 12) ? hr - 12 : hr;
+                  //Add a zero in front of numbers<10
+                  hr = checkTime(hr).toString().toArabicDigits();
+                  min = checkTime(min).toString().toArabicDigits();
+                  sec = checkTime(sec).toString().toArabicDigits();
+                  document.getElementById("clock").innerHTML = hr + ":" + min + ":" + sec + " " + ap;
+                  
+                  var months = ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+                  var days = ['الاحد', 'الاثنين', 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعة', 'السبت'];
+                  var curWeekDay = days[today.getDay()];
+                  var curDay = today.getDate();
+                  var curMonth = months[today.getMonth()];
+                  var curYear = today.getFullYear();
+                  var date = curWeekDay+", "+curDay+" "+curMonth+" "+curYear;
+                  date = date.toArabicDigits();
+                  document.getElementById("date").innerHTML = date;
+                  
+                  var time = setTimeout(function(){ startTime() }, 500);
+                  
+              }
+              function checkTime(i) {
+                  if (i < 10) {
+                      i = "0" + i;
+                  }
+                  return i;
+              }
+              
+        String.prototype.toArabicDigits= function(){
+         var id= ['&#1632;','&#1633;','&#1634;','&#1635;',"&#1636;","&#1637;","&#1638;",'&#1639;','&#1640;','&#1641;'] ;
+         return this.replace(/[0-9]/g, function(w){return id[+w]});
+         }
+          function arabian() {
+            var str = document.getElementsByClassName("dropdown-item"); 
+            for (i = 0; i < str.length; i++){
+            var x = str[i].innerHTML.toArabicDigits(); 
+            str[i].innerHTML = x;
+            }
+            var str = document.getElementsByClassName("badge badge-secondary"); 
+            for (i = 0; i < str.length; i++){
+            var x = str[i].innerHTML.toArabicDigits(); 
+            str[i].innerHTML = x;
+            }
+            var str = document.getElementsByClassName("arabic"); 
+            for (i = 0; i < str.length; i++){
+            var x = str[i].innerHTML.toArabicDigits(); 
+            str[i].innerHTML = x;
+            }
+            var str = document.getElementsByClassName("list-group-item"); 
+            for (i = 0; i < str.length; i++){
+            var x = str[i].innerHTML.toArabicDigits(); 
+            str[i].innerHTML = x;
+            }
+            
+            
+          }
+        
+          
+        </script>   
+<script>
+    function autocomplete(inp, arr) {
+      /*the autocomplete function takes two arguments,
+      the text field element and an array of possible autocompleted values:*/
+      var currentFocus;
+      /*execute a function when someone writes in the text field:*/
+      inp.addEventListener("input", function(e) {
+          var a, b, i, val = this.value;
+          /*close any already open lists of autocompleted values*/
+          closeAllLists();
+          if (!val) { return false;}
+          currentFocus = -1;
+          /*create a DIV element that will contain the items (values):*/
+          a = document.createElement("DIV");
+          a.setAttribute("id", this.id + "autocomplete-list");
+          a.setAttribute("class", "autocomplete-items");
+          /*append the DIV element as a child of the autocomplete container:*/
+          this.parentNode.appendChild(a);
+          /*for each item in the array...*/
+          for (i = 0; i < arr.length; i++) {
+            /*check if the item starts with the same letters as the text field value:*/
+            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+              /*create a DIV element for each matching element:*/
+              b = document.createElement("DIV");
+              /*make the matching letters bold:*/
+              b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+              b.innerHTML += arr[i].substr(val.length);
+              /*insert a input field that will hold the current array item's value:*/
+              b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+              /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+                  /*insert the value for the autocomplete text field:*/
+                  inp.value = this.getElementsByTagName("input")[0].value;
+                  /*close the list of autocompleted values,
+                  (or any other open lists of autocompleted values:*/
+                  closeAllLists();
+              });
+              a.appendChild(b);
+            }
+          }
+      });
+      /*execute a function presses a key on the keyboard:*/
+      inp.addEventListener("keydown", function(e) {
+          var x = document.getElementById(this.id + "autocomplete-list");
+          if (x) x = x.getElementsByTagName("div");
+          if (e.keyCode == 40) {
+            /*If the arrow DOWN key is pressed,
+            increase the currentFocus variable:*/
+            currentFocus++;
+            /*and and make the current item more visible:*/
+            addActive(x);
+          } else if (e.keyCode == 38) { //up
+            /*If the arrow UP key is pressed,
+            decrease the currentFocus variable:*/
+            currentFocus--;
+            /*and and make the current item more visible:*/
+            addActive(x);
+          } else if (e.keyCode == 13) {
+            /*If the ENTER key is pressed, prevent the form from being submitted,*/
+            e.preventDefault();
+            if (currentFocus > -1) {
+              /*and simulate a click on the "active" item:*/
+              if (x) x[currentFocus].click();
+            }
+          }
+      });
+      function addActive(x) {
+        /*a function to classify an item as "active":*/
+        if (!x) return false;
+        /*start by removing the "active" class on all items:*/
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        /*add class "autocomplete-active":*/
+        x[currentFocus].classList.add("autocomplete-active");
+      }
+      function removeActive(x) {
+        /*a function to remove the "active" class from all autocomplete items:*/
+        for (var i = 0; i < x.length; i++) {
+          x[i].classList.remove("autocomplete-active");
+        }
+      }
+      function closeAllLists(elmnt) {
+        /*close all autocomplete lists in the document,
+        except the one passed as an argument:*/
+        var x = document.getElementsByClassName("autocomplete-items");
+        for (var i = 0; i < x.length; i++) {
+          if (elmnt != x[i] && elmnt != inp) {
+            x[i].parentNode.removeChild(x[i]);
+          }
+        }
+      }
+      /*execute a function when someone clicks in the document:*/
+      document.addEventListener("click", function (e) {
+          closeAllLists(e.target);
+      });
+    }
+
+    var list = {{names|safe}};
+    autocomplete(document.getElementById("myInput"), list);
+
+     
+</script>
+
+</html>
+

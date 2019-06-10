@@ -1,0 +1,360 @@
+﻿{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+{% load static %}
+
+<style>
+ table tr th {
+    font-size: 14px;
+    background-color:rgb(16, 224, 224);
+  }
+  table tr td {
+    border-collapse: collapse;
+    border:10px;
+    border-style: solid;
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  
+
+  
+  li {
+      float: right;
+  }
+  
+  li a, .dropbtn {
+      display: inline-block;
+      color: black;
+      text-align: center;
+      
+      text-decoration: none;
+  }
+  
+  li a:hover, .dropdown:hover .dropbtn {
+      background-color: rgb(4, 0, 255);
+  }
+  
+  li.dropdown {
+      display: inline-block;
+  }
+  
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+  }
+  
+  .dropdown-content a {
+      color: black;
+      padding: 12px 10px;
+      text-decoration: none;
+      display: block;
+      text-align: right;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1;}
+  
+  .dropdown:hover .dropdown-content {
+      display: block;
+  }
+  .dropbtn {
+      width: 160px;}
+
+  
+    }
+
+  .dropdown-menu{
+    text-align: center;
+  }
+  </style>
+<div class="container">
+  <div class="row justify-content-start mb-5">
+  <div class="col ">
+            <div class="dropdown dropright float-left is-hoverable">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                  دفعات الرديف
+                </button>
+                <div class="dropdown-menu is-hoverable">
+                  {% for dof3a in dof3at %}
+                  <form action="{% url 'armydbapp:dof3a_radif' %}" method="post">
+                      {% csrf_token %}
+                      <input type="date" class="form-control"  name="dof3a" value='{{dof3a|date:"Y-m-d"}}' hidden>
+                      <button class="dropdown-item" type="submit" >{{dof3a|date:"Y/n/j"}}</button>   
+                  
+                  </form>
+
+                  {% endfor%}
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+<div class="container">
+<div class="row  justify-content-around mb-5">
+    <div class="col-2">
+        <a type="button" class="btn btn-primary" href="{% url 'armydbapp:katiba_headquart' %}">قيادة الكتيبة</a>
+    </div>
+    <div class="col-4">
+        <a type="button" class="btn btn-primary" href="{% url 'armydbapp:add_soldier' %}">إضافة جندي</a>
+    </div>
+</div>
+</div>  
+<div class="container">
+<div class="row justify-content-around mb-5">
+    
+      <div class="col ">
+          <div class="dropdown dropleft float-right is-hoverable">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                السرية الاولي
+              </button>
+              <div class="dropdown-menu is-hoverable""> 
+                <a class="dropdown-item" href="{% url 'armydbapp:s1_headquart' %}">قيادة السرية</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_1' %}">1 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_2' %}">2 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_3' %}">3 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_4' %}">4 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_5' %}">5 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_6' %}">6 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_7' %}">7 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_8' %}">8 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_1' %}">1 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_2' %}">2 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_3' %}">3 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_4' %}">4 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_5' %}">5 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_6' %}">6 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_7' %}">7 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_8' %}">8 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:nahas' %}">4 نحاس</a>
+              </div>
+          </div>
+          
+      </div>
+      <div class="col ">
+          <div class="dropdown dropright float-left is-hoverable">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                السرية الثانية
+              </button>
+              <div class="dropdown-menu is-hoverable"> 
+                <a class="dropdown-item" href="{% url 'armydbapp:s2_headquart' %}">قيادة السرية</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_9' %}">9 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_10' %}">10 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_11' %}">11 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:tagar_12' %}">12 تاجر</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_9' %}">9 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_10' %}">10 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_11' %}">11 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:ahmed_12' %}">12 احمد</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_1' %}">1 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_2' %}">2 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_3' %}">3 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_4' %}">4 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_1' %}">1 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_2' %}">2 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_3' %}">3 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_4' %}">4 هشام</a>
+              </div>
+          </div>
+          
+      </div>
+      <div class="col ">
+          <div class="dropdown dropright float-left is-hoverable">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                السرية الثالثة
+              </button>
+              <div class="dropdown-menu is-hoverable"> 
+                <a class="dropdown-item" href="{% url 'armydbapp:s3_headquart' %}">قيادة السرية</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_5' %}">5 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_6' %}">6 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_7' %}">7 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_8' %}">8 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_9' %}">9 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_10' %}">10 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_11' %}">11 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:badi3_12' %}">12 بديع</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_5' %}">5 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_6' %}">6 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_7' %}">7 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_8' %}">8 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_9' %}">9 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_10' %}">10 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_11' %}">11 هشام</a>
+                <a class="dropdown-item" href="{% url 'armydbapp:hisham_12' %}">12 هشام</a>
+              </div>
+          </div>
+          
+      </div>
+
+      
+    
+     
+    </div>
+</div>
+</div>
+    
+
+    
+
+
+<div class="table-responsive">
+<table class="table table-bordered" style="text-align:center;" dir="rtl">
+    <thead >
+      <tr>
+        <th class="border" scope="col" style="text-align: center;">م</th>
+        <th class="border" scope="col" style="text-align:center;">الاسم</th>
+        <th class="border" scope="col" style="text-align: center;">الرقم العسكري</th>
+        <th class="border" scope="col" style="text-align: center;">التمركز</th>
+        <th class="border" scope="col" style="text-align: center;" >تاريخ التجنيد</th>
+        <th class="border" scope="col" style="text-align: center;" >تاريخ التسريح</th>
+        <th class="border" scope="col" style="text-align: center;">التخصص</th>
+        <th class="border" scope="col" style="text-align:center;">العنوان</th>
+        <th class="border" scope="col" style="text-align:center;" colspan="3" > مشروع اجازة</th>
+        <th class="border" scope="col"></th>
+        <th class="border" scope="col"></th>
+        
+        
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for soldier in soldier_list %}
+      
+        <tr id={{soldier.id}}>
+          <td class="arabic border">
+              {{forloop.counter}}
+          </td>
+          <td class="border" style="text-align: center; min-width: 250px;">
+            <a href="{% url 'armydbapp:soldier_information' %}?soldier_id={{soldier.soldier_id}}">{{soldier.name}}</a>
+            {% if soldier.is_at_vacation %}
+              <br><span class="badge badge-secondary">تاريخ العودة: {{soldier.return_date|date:"Y/n/j"}}</span>
+            {% endif %}
+            {% if soldier.is_at_vacation_sick %}
+              <br><span class="badge badge-secondary">!!!اجازة مرضية!!!</span>
+            {% endif %}
+            {% if soldier.is_awaiting_trial %}
+              <br><span class="badge badge-secondary">!!!منتظر مكتب!!!</span>
+              <br><span class="badge badge-secondary">السبب : {{soldier.reason_awaiting_trial}}</span>
+            {% endif %}
+            {% if soldier.is_absent %}
+              <br><span class="badge badge-secondary">!!!غيــــاب!!!</span>
+            {% endif %}
+            {% if soldier.is_out %}
+              <br><span class="badge badge-secondary">!!!{{soldier.outing_type}}!!!</span>
+            {% endif %}
+            {% if soldier.is_in_mission %}
+              <br><span class="badge badge-secondary">!!!{{soldier.mission_type}}!!!</span>
+            {% endif %}
+            {% if soldier.is_rewarded and soldier.reward_days > 0 %} 
+              <br><span class="badge badge-secondary">عدد أيام المنحة: {{soldier.reward_days}} </span>
+            {% endif %}
+            {% if soldier.is_at_punishment == True %} 
+                {% for p in soldiers_punishments %}
+                  {% if p.soldier == soldier %}
+                    <br><span class="badge badge-secondary">نوع العقوبة: {{p.punishment}}</span>
+                    <br><span class="badge badge-secondary">تاريخ بدأ العقوبة: {{p.start_date|date:"Y/n/j"}} </span>
+                    <br><span class="badge badge-secondary">تاريخ نهاية العقوبة: {{p.end_date|date:"Y/n/j"}}</span>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+          </td>
+          <td class="arabic border">{{soldier.soldier_id}}</td>
+          
+          <td class="arabic border" >{{soldier.current_army_unit}}</td>
+          <td class="arabic border">{{soldier.service_start_date|date:"Y/n/j"}}</td>
+          
+          <td class="arabic border">{{soldier.service_end_date|date:"Y/n/j"}}</td>
+          
+          <td>{{soldier.speciality}}</td>
+          <td class="arabic border" style="text-align: center;">{{soldier.adress}}</td>
+          <td style="width:1px;">
+            <form action="{% url 'armydbapp:vacation_choice' %}" method="post" >
+              {% csrf_token %}
+                <input type="hidden" name="soldier_number" value={{soldier.soldier_id}} >
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="1" 
+                {% if soldier.vacation_choice == 1 %} checked="checked"
+                {% else %}
+                {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio1" > الأول</label>
+            </div>
+          </td>
+          <td style="width:1px;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="2" 
+              {% if soldier.vacation_choice == 2 %} checked="checked"
+              {% else %}
+              {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio2" > الثاني</label>
+            </div>
+          </td>
+          <td style="width:1px;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="3" 
+              {% if soldier.vacation_choice == 3 %} checked="checked"
+              {% else %}
+              {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio3"> الثالث</label>
+             </div>
+         </form>
+          </td>
+        
+          <td class="border">
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn"><img src="{% static 'armydbapp/images/s1.png' %}" alt="dropdownicon" height="42" width="42"></a>
+                <div class="dropdown-content">
+                    {% if soldier.current_army_unit == "قيادة الكتيبة" %}
+                    <a  href="{% url 'armydbapp:add_work_assigned' %}?soldier_id={{soldier.soldier_id}}">إضافة العمل المكلف به</a>
+                    <a  href="{% url 'armydbapp:add_job' %}?soldier_id={{soldier.soldier_id}}">إضافة الحرفة</a>
+                    {% endif %}
+                    <a  href="{% url 'armydbapp:add_zucchini' %}?soldier_id={{soldier.soldier_id}}">إضافة توصية</a>
+                    <a  href="{% url 'armydbapp:add_img' %}?soldier_id={{soldier.soldier_id}}">إضافة صورة</a>
+                    <a  href="{% url 'armydbapp:add_promotion' %}?soldier_id={{soldier.soldier_id}}">إضافة ترقي</a>
+                    <a  href="{% url 'armydbapp:add_reward' %}?soldier_id={{soldier.soldier_id}}">إضافة منحة</a>
+                    <a  href="{% url 'armydbapp:reward_consumed' %}?soldier_id={{soldier.soldier_id}}">تم منحه</a>
+                    <a  href="{% url 'armydbapp:add_vacation' %}?soldier_id={{soldier.soldier_id}}">إجازة</a>
+                    <a  href="{% url 'armydbapp:add_vacation_sick' %}?soldier_id={{soldier.soldier_id}}">إجازة مرضية</a>
+                    <a  href="{% url 'armydbapp:mission' %}?soldier_id={{soldier.soldier_id}}">إضافة مأمورية</a>
+                    <a  href="{% url 'armydbapp:no_mission' %}?soldier_id={{soldier.soldier_id}}">إزالة مأمورية</a>
+                    <a  href="{% url 'armydbapp:outing' %}?soldier_id={{soldier.soldier_id}}">إضافة إلي خوارج ثابتة</a>
+                    <a  href="{% url 'armydbapp:no_outing' %}?soldier_id={{soldier.soldier_id}}">ازالة من خوارج ثابتة</a>
+                    <a  href="{% url 'armydbapp:change_army_unit' %}?soldier_id={{soldier.soldier_id}}">تغيير التمركز</a>
+                    <a  href="{% url 'armydbapp:add_punishment' %}?soldier_id={{soldier.soldier_id}}">إضافة عقوبة</a>
+                    <a  href="{% url 'armydbapp:awaiting_trial' %}?soldier_id={{soldier.soldier_id}}">منتظر مكتب</a>
+                    <a  href="{% url 'armydbapp:trial_done' %}?soldier_id={{soldier.soldier_id}}">تم عرضه</a>
+                    <a  href="{% url 'armydbapp:absent' %}?soldier_id={{soldier.soldier_id}}">غيــــاب</a>
+                    <a  href="{% url 'armydbapp:present' %}?soldier_id={{soldier.soldier_id}}">حضر من الغياب</a>
+                    <a  href="{% url 'armydbapp:delete_soldier' %}?soldier_id={{soldier.soldier_id}}">مسح بيانات الجندي</a>
+                </div>
+            </li>
+        </td>
+                    
+        </tr>
+        {% if soldier.is_rewarded and soldier.is_at_vacation == False and soldier.reward_days > 0 %}
+          <script>document.getElementById("{{soldier.id}}").style.backgroundColor="green";</script>
+        {% endif %}
+        {% if soldier.is_at_vacation == True %}
+          <script>document.getElementById("{{soldier.id}}").style.backgroundColor="yellow";</script>
+          {% if soldier.is_rewarded and soldier.is_at_vacation and soldier.reward_days > 0 %}
+          <script>document.getElementsByClassName("reward-days")[0].style.backgroundColor="green";</script>
+          {% endif %}
+        {% endif %}
+        {% if soldier.is_at_punishment %}
+        <script>document.getElementById("{{soldier.id}}").style.backgroundColor="red";</script>
+        <script>document.getElementById("{{soldier.id}}").style.color="white";</script>
+        {% endif %}
+    {% endfor %}
+    <td style="height: 700px"></td>
+    </tbody>
+    
+</table>  
+</div>
+</div>
+
+
+{% endblock content %}
